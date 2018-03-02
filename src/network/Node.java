@@ -2,6 +2,7 @@ package network;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 
 import event.Event;
@@ -22,16 +23,19 @@ public class Node extends Thread
 		this.address = a;
 		
 		try {
-			System.out.println("[NODE STATUS] HANDSHAKING :  NODE(" + address +")에게 핸드셰이크 요청을 보냈습니다.");
-			node_socket = new Socket(a,20185);
-			if(node_socket.isConnected())
+			if(address != InetAddress.getLocalHost().getAddress().toString())
 			{
-				handshake_flag = true;
-				System.out.println("[NODE STATUS] HANDSHAKING :  NODE(" + address +")가 핸드셰이크를 수락했습니다.");
-				this.start();
+				System.out.println("[NODE STATUS] HANDSHAKING :  NODE(" + address +")에게 핸드셰이크 요청을 보냈습니다.");
+				node_socket = new Socket(a,20185);
+				if(node_socket.isBound())
+				{
+					handshake_flag = true;
+					System.out.println("[NODE STATUS] HANDSHAKING :  NODE(" + address +")가 핸드셰이크를 수락했습니다.");
+					this.start();
+				}
 			}
 		}catch(Exception e) {
-			
+			System.out.println("[NODE STATUS] HANDSHAKING :  NODE(" + address +")핸드쉐이크 요청에 실패했습니다.");
 		}
 	}
 
