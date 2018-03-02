@@ -35,6 +35,7 @@ public class Node extends Thread
 				}
 			}
 		}catch(Exception e) {
+			System.out.println("[ERROR] : " + e.getCause() + (" + e.getMessage() +")");
 			System.out.println("[NODE STATUS] HANDSHAKING :  NODE(" + address +")핸드쉐이크 요청에 실패했습니다.");
 		}
 	}
