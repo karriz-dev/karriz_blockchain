@@ -38,6 +38,7 @@ import crypto.KeyGenerator;
 import event.Event;
 import network.NodeManager;
 import network.NodeSyncManager;
+import transaction.RecvTransaction;
 import transaction.SendTransaction;
 import transaction.Transaction;
 import wallet.Address;
@@ -303,6 +304,9 @@ public class MainLayout extends JFrame
                 	
                 	refresh_sendlist();
                 	refresh_base_coin();
+                	
+                	Transaction tx = new RecvTransaction(Address.get_address(),textField.getText(),(float)spinner.getValue());
+                	NodeManager.get_instance().broadcasting_tx(tx);
             	}
             }
         });
