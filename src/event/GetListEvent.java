@@ -7,11 +7,11 @@ import network.Node;
 
 public class GetListEvent extends Event
 {
-	private List<Node> nodelist = null;
+	private List<String> nodelist = null;
 	
 	public GetListEvent(int bodylength, byte[] body)
 	{
-		nodelist = new ArrayList<Node>();
+		nodelist = new ArrayList<String>();
 		
 		// address_size, address_length, address, 
 
@@ -35,13 +35,13 @@ public class GetListEvent extends Event
 			
 			String address = new String(datas);
 			String[] split = address.split(":");
-			nodelist.add(new Node(split[0]));
+			nodelist.add(split[0]);
 
 			offset += length;
 		}
 	}
 
-	public List<Node> getlist()
+	public List<String> getlist()
 	{
 		return nodelist;
 	}

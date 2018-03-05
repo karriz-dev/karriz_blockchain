@@ -11,31 +11,15 @@ import transaction.Transaction;
 
 public class Node extends Thread
 {
-	private String address = null;
-	private String version = null;
-	
-	private boolean handshake_flag = false;
-	
 	private Socket node_socket = null;
 	
-	public Node(String a)
+	public Node(Socket sock)
 	{
-		this.address = a;
-		
 		try {
-			if(!address.equals(InetAddress.getLocalHost().getHostAddress()))
-			{
-				System.out.println("[NODE STATUS] HANDSHAKING :  NODE(" + address +")에게 핸드셰이크 요청을 보냈습니다.");
-				
-				node_socket = new Socket(a,20185);
-
-				handshake_flag = true;
-				System.out.println("[NODE STATUS] HANDSHAKING :  NODE(" + address +")가 핸드셰이크를 수락했습니다.");
-				this.start();
-			}
+			node_socket = sock;
+			this.start();
 		}catch(Exception e) {
 			System.out.println("[ERROR] : " + e.getCause() + "(" + e.getMessage() +")");
-			System.out.println("[NODE STATUS] HANDSHAKING :  NODE(" + address +")핸드쉐이크 요청에 실패했습니다.");
 		}
 	}
 
@@ -115,26 +99,9 @@ public class Node extends Thread
 					Thread.sleep(1);
 				}
 			}catch(Exception e) {
-				System.out.println("[NODE STATUS] STATUS : NODE(" + address +")와 연결이 끊어졌습니다. (현재 전송가능한 노드 : 0개)");
+				System.out.println("[ERROR] : " + e.getCause() + "(" + e.getMessage() +")");
 				break;
 			}
 		}
-	}
-	
-	public synchronized boolean send_transaction(Transaction tx)
-	{
-		try {
-			OutputStream out = node_socket.getOutputStream();
-			out.write(tx.getbytes());
-			out.flush();
-			return true;
-		}catch(Exception e) {
-			return false;
-		}
-	}
-	
-	public String get_address()
-	{
-		return address;
 	}
 }
