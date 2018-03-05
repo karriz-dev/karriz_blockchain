@@ -87,11 +87,14 @@ public class NodeManager extends Thread
 				if(!address.equals(InetAddress.getLocalHost().getHostAddress()))
 				{
 					System.out.println("[NODE STATUS] HANDSHAKING : Node(" + address +")에게 HandShaking 요청을 보냈습니다.");
-					send_nodes.add(new Socket(address,20185));
+					Socket clnt = new Socket(address,20185);
 					System.out.println("[NODE STATUS] HANDSHAKING : Node(" + address +")에게 HandShaking이 성공하였습니다.");
+					send_nodes.add(clnt);
 					count++;
 				}
 			}catch(Exception e) {
+				e.printStackTrace();
+				System.out.println(e.getCause() +"/" + e.getMessage());
 				System.out.println("[NODE STATUS] HANDSHAKING : Node(" + address +")의 HandShaking이 실패하였습니다.");
 			}
 		}
