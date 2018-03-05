@@ -1,7 +1,7 @@
 package tester;
 
 import layout.MainLayout;
-import network.NodeManager;
+import network.NodeSyncManager;
 
 public class TestClient 
 {
@@ -15,7 +15,7 @@ public class TestClient
 		 * 
 		 */
 		
-		NodeManager.get_instance();
+		NodeSyncManager.get_instance();
 		MainLayout.get_instance();
 	}
 }

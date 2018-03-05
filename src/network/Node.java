@@ -23,16 +23,15 @@ public class Node extends Thread
 		this.address = a;
 		
 		try {
-			if(address != InetAddress.getLocalHost().getAddress().toString())
+			if(!address.equals(InetAddress.getLocalHost().getHostAddress()))
 			{
 				System.out.println("[NODE STATUS] HANDSHAKING :  NODE(" + address +")에게 핸드셰이크 요청을 보냈습니다.");
+				
 				node_socket = new Socket(a,20185);
-				if(node_socket.isBound())
-				{
-					handshake_flag = true;
-					System.out.println("[NODE STATUS] HANDSHAKING :  NODE(" + address +")가 핸드셰이크를 수락했습니다.");
-					this.start();
-				}
+
+				handshake_flag = true;
+				System.out.println("[NODE STATUS] HANDSHAKING :  NODE(" + address +")가 핸드셰이크를 수락했습니다.");
+				this.start();
 			}
 		}catch(Exception e) {
 			System.out.println("[ERROR] : " + e.getCause() + "(" + e.getMessage() +")");

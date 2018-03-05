@@ -37,6 +37,7 @@ import javax.swing.event.ListSelectionListener;
 import crypto.KeyGenerator;
 import event.Event;
 import network.NodeManager;
+import network.NodeSyncManager;
 import transaction.SendTransaction;
 import transaction.Transaction;
 import wallet.Address;
@@ -83,7 +84,7 @@ public class MainLayout extends JFrame
 		    @Override
 		    public void run()
 		    {
-		    	NodeManager.get_instance().send_exitevent();
+		    	NodeSyncManager.get_instance().send_exitevent();
 		    }
 		});
 		
