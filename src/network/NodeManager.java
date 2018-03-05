@@ -5,6 +5,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class NodeManager extends Thread
 	private NodeManager() {
 		try {
 			receiver = new ServerSocket(20185);
+			send_nodes = new ArrayList<Socket>();
 			this.start();
 		}catch(Exception e) {
 			
