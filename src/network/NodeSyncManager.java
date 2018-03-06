@@ -92,7 +92,7 @@ public class NodeSyncManager extends Thread
 						NodeManager.get_instance().setNodeList(event.getlist());
 					}	
 				}
-				Thread.sleep(10000);
+				Thread.sleep(3000);
 			}
 		}catch(Exception e) {
 			System.out.println("[DEBUG] - " + e.getCause() + "(" + e.getMessage() + ")");

@@ -49,17 +49,19 @@ public class NodeManager extends Thread
 	public boolean broadcasting_tx(Transaction tx)
 	{
 		try {
-			if(send_nodes.size()>1)
+			if(send_nodes.size()>0)
 			{
 				for(Socket sock : send_nodes)
 				{
 					OutputStream out = sock.getOutputStream();
 					out.write(tx.getbytes());
+					System.out.println("[NODE STATUS] SEND OK !!");
 				}
 				return true;
 			}
 			else return false;
 		}catch(Exception e) {
+			System.out.println(e.getCause()+"/"+e.getMessage());
 			return false;
 		}
 	}
