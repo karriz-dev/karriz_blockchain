@@ -6,9 +6,11 @@ public class RecvTransaction extends Transaction
 	private String message = null;
 	private float amount = 0.0f;
 	
-	public RecvTransaction(byte[] body)
-	{
-		header = Transaction.RECV_COIN;
+	public RecvTransaction(long t, int h, int bl, byte[] b) {
+		t_id = t;
+		header = h;
+		bodylength = bl;
+		buffer = b;
 	}
 	
 	public RecvTransaction(String address, String message, float amount) 

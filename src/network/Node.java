@@ -50,6 +50,8 @@ public class Node extends Thread
 							}
 						}
 						
+						long t_id = Event.bytesToLong(datas);
+						
 						// Read header (4byte)
 						datas = new byte[4];
 						count = 0;
@@ -62,6 +64,8 @@ public class Node extends Thread
 								count++;
 							}
 						}
+						
+						int header = Event.byteArrayToInt(datas);
 						
 						// Read bodylength (4byte)
 						datas = new byte[4];
@@ -91,9 +95,10 @@ public class Node extends Thread
 							}
 						}
 						
-						Transaction tx = new RecvTransaction(datas);
+						Transaction tx = new RecvTransaction(t_id,header,bodylength, datas);
+
 						if(TransactionQueue.get_instance().add_transaction(tx)) {
-							System.out.println("Tx_id : 12cdbk1jh2bkdjbk12r67h4ww45hb");
+							System.out.println("[NODE STATUS] TRANSACTION : 트랜잭션 전송이 완료되었습니다.");
 						}
 					}
 					Thread.sleep(1);

@@ -19,6 +19,13 @@ public abstract class Transaction
 		buffer = new byte[1024];
 	}
 	
+	public Transaction(long t, int h, int bl, byte[] b) {
+		t_id = t;
+		header = h;
+		bodylength = bl;
+		buffer = b;
+	}
+	
 	public abstract byte[] getbytes();
 	public int get_header() {return header;}
 	

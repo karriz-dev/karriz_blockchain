@@ -1,5 +1,7 @@
 package event;
 
+import java.nio.ByteBuffer;
+
 public abstract class Event 
 {
 	public static final int ENTER_EVENT = 0x20000001;
@@ -30,4 +32,17 @@ public abstract class Event
 				(((int)bytes[2] & 0xff) << 8) |
 				(((int)bytes[3] & 0xff)));
 	} 
+	
+	public static byte[] longToBytes(long x) {
+	    ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
+	    buffer.putLong(x);
+	    return buffer.array();
+	}
+
+	public static long bytesToLong(byte[] bytes) {
+	    ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
+	    buffer.put(bytes);
+	    buffer.flip();//need flip 
+	    return buffer.getLong();
+	}
 }
