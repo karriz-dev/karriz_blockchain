@@ -15,6 +15,7 @@ public class TransactionQueue extends Thread
 	private TransactionQueue()
 	{
 		transactionQueue = new LinkedList<Transaction>();
+		this.start();
 	}
 	
 	@Override
@@ -25,6 +26,8 @@ public class TransactionQueue extends Thread
 			if(!transactionQueue.isEmpty())
 			{
 				Transaction t =  transactionQueue.poll();
+				System.out.println(t.get_header());
+				
 				Block block = null;
 				
 				switch(t.get_header())
@@ -70,6 +73,7 @@ public class TransactionQueue extends Thread
 			transactionQueue.add(tx);
 			return true;
 		}catch(Exception e) {
+			System.out.println("[TX ERROR] : " + e.getCause() +"("+e.getMessage()+")");
 			return false;
 		}
 	}

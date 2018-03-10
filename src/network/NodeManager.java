@@ -122,7 +122,7 @@ public class NodeManager extends Thread
 					OutputStream out = sock.getOutputStream();
 					out.write(tx.getbytes());
 				}
-				System.out.println("[NODE STATUS] SEND : 노드 " + (send_nodes.size()-1) +"개에게 트랜잭션 전송을 성공하였습니다.");
+				System.out.println("[NODE STATUS] SEND : 노드 " + send_nodes.size() +"개에게 트랜잭션 전송을 성공하였습니다.");
 				return true;
 			}
 			else return false;

@@ -1,7 +1,11 @@
 package block;
 
+import java.io.FileOutputStream;
+
 import crypto.Encrypt;
+import event.Event;
 import transaction.Transaction;
+import wallet.WalletData;
 
 public class Block 
 {
@@ -41,15 +45,19 @@ public class Block
 	
 	public boolean saveblock()
 	{
-		try {
-			if(body != null)
-			{
-				
+		if(body != null)
+		{
+			try {
+				FileOutputStream out = new FileOutputStream("block/" + block_id +".block");
+				out.write(block_id.getBytes());
+				out.write(version.getBytes());
+				out.write(prev_block_id.getBytes());
+				out.write(body.getbytes());
 				return true;
+			}catch(Exception e) {
+				return false;
 			}
-			else return false;
-		}catch(Exception e) {
-			return false;
 		}
+		else return false;
 	}
 }
