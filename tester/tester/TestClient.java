@@ -17,5 +17,7 @@ public class TestClient
 		
 		NodeSyncManager.get_instance();
 		MainLayout.get_instance();
+		
+		// Generating Genesis Block
 	}
 }

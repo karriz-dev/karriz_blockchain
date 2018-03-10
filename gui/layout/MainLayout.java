@@ -91,7 +91,7 @@ public class MainLayout extends JFrame
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage("assets/138292.png"));
 		
-		setBounds(100,100,662,432);
+		setBounds(100,100,662,488);
 		
 		setResizable(false);
 		
@@ -100,13 +100,13 @@ public class MainLayout extends JFrame
 		
 		lblBase = new JLabel("0.0 BaSE");
 		lblBase.setFont(new Font("±¼¸²", Font.PLAIN, 20));
-		lblBase.setBounds(382, 7, 248, 26);
+		lblBase.setBounds(101, 7, 529, 26);
 		lblBase.setHorizontalAlignment(SwingConstants.RIGHT);
 		getContentPane().add(lblBase);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
 		tabbedPane.setBorder(null);
-		tabbedPane.setBounds(12, 35, 622, 338);
+		tabbedPane.setBounds(12, 73, 622, 338);
 		getContentPane().add(tabbedPane);
 		
 		JPanel panel_2 = new JPanel();
@@ -209,8 +209,8 @@ public class MainLayout extends JFrame
 				Transaction tx = new SendTransaction();
 				NodeManager.get_instance().broadcasting_tx(tx);
 				
-				// ¼¾µå ¤¼
-				datalist.add(new WalletData(textField_1.getText(), " ", (float) spinner_1.getValue(), "send"));
+				// send transaction
+				datalist.add(new WalletData(textField_1.getText(), " ", (float) spinner_1.getValue(), "send_lock"));
 				
 				savekey();
 				refresh_sendlist();
@@ -298,7 +298,7 @@ public class MainLayout extends JFrame
                 	Address = new Address(publickey);
                 	txt_address.setText(Address.get_address());
 
-        			datalist.add(new WalletData(Address.get_address(),textField.getText(),(float)spinner.getValue(),"recv"));
+        			datalist.add(new WalletData(Address.get_address(),textField.getText(),(float)spinner.getValue(),"recv_lock"));
         			
                 	savekey();
                 	
@@ -327,8 +327,19 @@ public class MainLayout extends JFrame
 		
 		lblSyncAt = new JLabel("Sync At 2017-01-12 14:22:33");
 		lblSyncAt.setForeground(Color.DARK_GRAY);
-		lblSyncAt.setBounds(465, 378, 169, 15);
+		lblSyncAt.setBounds(465, 421, 169, 15);
+		lblSyncAt.setHorizontalAlignment(SwingConstants.RIGHT);
 		getContentPane().add(lblSyncAt);
+		
+		JLabel lblSendLock = new JLabel("Send Lock : 0.0 BaSE");
+		lblSendLock.setBounds(350, 32, 280, 15);
+		lblSendLock.setHorizontalAlignment(SwingConstants.RIGHT);
+		getContentPane().add(lblSendLock);
+		
+		JLabel lblNewLabel = new JLabel("Receive Lock : 0.0 BaSE");
+		lblNewLabel.setBounds(375, 50, 255, 15);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		getContentPane().add(lblNewLabel);
 		setVisible(true);
 	}
 	
@@ -389,7 +400,6 @@ public class MainLayout extends JFrame
 				else if(data.getType().equals("send"))
 					base_coin -= data.getAmount();
 			}
-			lblBase.setText(base_coin + " Base");
 			return true;
 		}catch(Exception e) {
 			base_coin = 0.0f;

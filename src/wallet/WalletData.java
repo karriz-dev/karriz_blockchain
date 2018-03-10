@@ -66,6 +66,6 @@ public class WalletData
 		
 		offset += length;
 		
-		return datas;		
+		return datas;
 	}
 }

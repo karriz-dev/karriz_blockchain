@@ -15,7 +15,9 @@ public class Encrypt
 	// 2. 타원곡선 암호화				= OK
 	// 3. public key 생성			= OK
 	// 4. SHA256 암호화			= OK
-	// 5. RIPEMD160 암호화			= NO
+	// 5. RIPEMD160 암호화			= OK
+	
+	public static final String BLOCK_VERSION = "{BaSE://0.0.0.1}";
 	
 	private static final int BLOCK_LEN = 64;
 	

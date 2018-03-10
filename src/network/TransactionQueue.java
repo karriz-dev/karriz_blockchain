@@ -3,6 +3,7 @@ package network;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import block.Block;
 import transaction.Transaction;
 
 public class TransactionQueue extends Thread 
@@ -24,22 +25,33 @@ public class TransactionQueue extends Thread
 			if(!transactionQueue.isEmpty())
 			{
 				Transaction t =  transactionQueue.poll();
-			
+				Block block = null;
+				
 				switch(t.get_header())
 				{
 				case Transaction.RECV_COIN:
-					// 1. RECV 명령을 받았을 경우에는 transaction을 mempool에 저장 
+					System.out.println("[NDOE STATUS] : RECV TRANSACTION");
 					
-					// 2. 일정이상 transaction이 생성되면 block 생성 진행 
-						// 2-1. transaction을 가지고 머클트리 생성 진행 
-						// 2-2. 만들어진 머클트리를 기반으로 하여 블록헤더 생성 
-						// 2-3. 블록생성이 완료되면 전파한 뒤 합의 과정 진행 
-						// 2-4. 합의 완료시 블록체인에 연결
-					System.out.println("RECV");
+					// 블록 생성 및 트랜잭션 검증 
+					block = new Block(t);
+					
+					// 블록 저장
+					block.saveblock();
+					
+					// 전파 
+					
 					break;
 				case Transaction.SEND_COIN:
-					// 2. SEND 명령을 받았을 경우에는 transaction 명부를 비교하며 address를 찾고 해당 adderss가 존재 한다면 UTXO를 생성하여 파일을 생성해 전파한다
-					System.out.println("SEND");
+					System.out.println("[NDOE STATUS] : SEND TRANSACTION");
+					
+					// 블록 생성 및 트랜잭션 검증 
+					block = new Block(t);
+					
+					// 블록 저장
+					block.saveblock();
+					
+					// 전파 
+					
 					break;
 				}
 			}
