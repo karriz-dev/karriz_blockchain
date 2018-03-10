@@ -1,11 +1,10 @@
 package block;
 
+import java.io.File;
 import java.io.FileOutputStream;
 
 import crypto.Encrypt;
-import event.Event;
 import transaction.Transaction;
-import wallet.WalletData;
 
 public class Block 
 {
@@ -47,14 +46,28 @@ public class Block
 	{
 		if(body != null)
 		{
+			String path = "block/";
+			File file = new File(path);
+			if(!file.exists())
+			{
+				file.mkdirs();
+			}
+
 			try {
-				FileOutputStream out = new FileOutputStream("block/" + block_id +".block");
+				FileOutputStream out = new FileOutputStream(path + block_id.toLowerCase().substring(2) +".block");
+				
 				out.write(block_id.getBytes());
+				
 				out.write(version.getBytes());
-				out.write(prev_block_id.getBytes());
+				
+				if(prev_block_id != null)
+					out.write(prev_block_id.getBytes());
+				
 				out.write(body.getbytes());
+				
 				return true;
 			}catch(Exception e) {
+				System.out.println("BLOCK ERROR : " + e.getCause() + "(" + e.getMessage() +")");
 				return false;
 			}
 		}
