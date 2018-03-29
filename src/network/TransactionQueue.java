@@ -1,20 +1,22 @@
 package network;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
 
 import block.Block;
 import transaction.Transaction;
 
 public class TransactionQueue extends Thread 
 {
+	private static final int TRANSACTION_MAX = 5;
+			
 	private static TransactionQueue instance = null;
 	
-	private Queue<Transaction> transactionQueue = null;
+	private List<Transaction> transactionList = null;
 	
 	private TransactionQueue()
 	{
-		transactionQueue = new LinkedList<Transaction>();
+		transactionList = new ArrayList<Transaction>();
 		this.start();
 	}
 	
@@ -23,40 +25,19 @@ public class TransactionQueue extends Thread
 	{
 		while(true)
 		{
-			if(!transactionQueue.isEmpty())
+			if(transactionList.size() >= TRANSACTION_MAX)
 			{
-				Transaction t =  transactionQueue.poll();
-				System.out.println(t.get_header());
+				System.out.println("[TRANSACTION QUEUE] 트랜잭션이 " + TRANSACTION_MAX + "개가 되어 블록 생성을 진행합니다.");
 				
-				Block block = null;
 				
-				switch(t.get_header())
-				{
-				case Transaction.RECV_COIN:
-					System.out.println("[NDOE STATUS] : RECV TRANSACTION");
-					
-					// 블록 생성 및 트랜잭션 검증 
-					block = new Block(t);
-					
-					// 블록 저장
-					block.saveblock();
-					
-					// 전파 
-					
-					break;
-				case Transaction.SEND_COIN:
-					System.out.println("[NDOE STATUS] : SEND TRANSACTION");
-					
-					// 블록 생성 및 트랜잭션 검증 
-					block = new Block(t);
-					
-					// 블록 저장
-					block.saveblock();
-					
-					// 전파 
-					
-					break;
-				}
+				// 1. 블록 생성
+				Block block = new Block(transactionList);
+				
+				// 2. 트랜잭션 리스트 초기화 
+				transactionList.clear();
+				
+				// 3. 블록 전파 
+				NodeManager.get_instance().broadcasting_block(block);
 			}
 		
 			try {
@@ -70,7 +51,7 @@ public class TransactionQueue extends Thread
 	public boolean add_transaction(Transaction tx)
 	{
 		try {
-			transactionQueue.add(tx);
+			transactionList.add(tx);
 			return true;
 		}catch(Exception e) {
 			System.out.println("[TX ERROR] : " + e.getCause() +"("+e.getMessage()+")");

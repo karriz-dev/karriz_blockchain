@@ -36,7 +36,7 @@ public class Node extends Thread
 				{				
 					if(in.available() > 0)
 					{
-						// Read t_id (8byte)
+						// Read id (8byte)
 						
 						byte[] datas = new byte[8];
 						int count = 0;
@@ -50,7 +50,7 @@ public class Node extends Thread
 							}
 						}
 						
-						long t_id = Event.bytesToLong(datas);
+						long id = Event.bytesToLong(datas);
 						
 						// Read header (4byte)
 						datas = new byte[4];
@@ -95,7 +95,7 @@ public class Node extends Thread
 							}
 						}
 						
-						Transaction tx = new RecvTransaction(t_id,header,bodylength, datas);
+						Transaction tx = new RecvTransaction(id,header,bodylength, datas);
 
 						if(TransactionQueue.get_instance().add_transaction(tx)) {
 							System.out.println("[NODE STATUS] TRANSACTION : 트랜잭션 전송이 완료되었습니다.");

@@ -1,10 +1,14 @@
 package crypto;
 
+import static java.lang.Integer.rotateLeft;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
-import static java.lang.Integer.rotateLeft;
+
+import transaction.Transaction;
 
 
 public class Encrypt 
@@ -133,6 +137,13 @@ public class Encrypt
 			state[4] = state[0] + bl + cr;
 			state[0] = temp;
 		}
+	}
+	
+	public static String getMerkleRoot(List<Transaction> tx_list)
+	{
+		MerkleTree merkle = new MerkleTree(tx_list);
+		
+		return merkle.getMerkleRoot();		
 	}
 	
 	private static int f(int i, int x, int y, int z) {	// RIPEMD160 암호화 진행에 필요한 해쉬 메소드

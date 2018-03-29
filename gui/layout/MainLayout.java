@@ -395,9 +395,9 @@ public class MainLayout extends JFrame
 			loadkey();
 			for(WalletData data : datalist)
 			{
-				if(data.getType().equals("recv"))
+				if(data.getType().equals("recv_lock"))
 					base_coin += data.getAmount();
-				else if(data.getType().equals("send"))
+				else if(data.getType().equals("send_lock"))
 					base_coin -= data.getAmount();
 			}
 			return true;

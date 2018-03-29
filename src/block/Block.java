@@ -2,6 +2,7 @@ package block;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.List;
 
 import crypto.Encrypt;
 import transaction.Transaction;
@@ -13,22 +14,26 @@ public class Block
 	 */
 	private String block_id = null;
 	private String version = Encrypt.BLOCK_VERSION;
+	private String merkle_root = null;
 	private String prev_block_id = null;
-
+	
 	private long timestamp = 0L;
 
 	/*
 	 * Block Body
 	 */
-	private Transaction body = null;
+	private List<Transaction> body = null;
 	
 	/*
 	 * Block Constructor
 	 */
-	public Block(Transaction tx){
+	public Block(List<Transaction> tx_list){
 		this.timestamp = System.currentTimeMillis();
-		this.body = tx;
-		this.block_id = Encrypt.get_RIPEMD160(Encrypt.get_SHA256(tx.toString()).getBytes());
+		this.body = tx_list;
+		
+		this.merkle_root = Encrypt.getMerkleRoot(body);
+		
+		this.block_id = Encrypt.get_RIPEMD160(Encrypt.get_SHA256(tx_list.toString()).getBytes());
 	}
 	
 	public Block(String path){}
@@ -60,10 +65,10 @@ public class Block
 				
 				out.write(version.getBytes());
 				
+				out.write(merkle_root.getBytes());
+				
 				if(prev_block_id != null)
 					out.write(prev_block_id.getBytes());
-				
-				out.write(body.getbytes());
 				
 				return true;
 			}catch(Exception e) {
